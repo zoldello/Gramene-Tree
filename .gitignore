@@ -1,2 +1,11 @@
 node_modules
 dist
+tmp*
+dist/
+*.swp
+*.orig
+util/can.*.js
+*node_modules*
+doc/
+*.DS_Store
+.idea
