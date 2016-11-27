@@ -1,0 +1,25 @@
+{
+  "name": "gramene-tree",
+  "version": "0.0.1",
+  "description": "Gramene tree implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gramene",
+    "tree",
+    "bioinformatics",
+    "plants",
+    "genomics",
+    "gramene-tree-client",
+    "javascript",
+    "es6",
+    "es2015",
+    "babel",
+    "babel.js",
+    "nodes"
+  ],
+  "author": "Phil Adenekan",
+  "license": "MIT"
+}
