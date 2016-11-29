@@ -1,6 +1,7 @@
 import d3 from "d3";
 import _ from "underscore";
 import Search from "./Search";
+import dom from "./Dom";
 
 export default class Tree {
 	constructor(data) {
@@ -70,30 +71,27 @@ markWellAnnotated() {
 			treeData = self.root,
 			flattenTreeData =  self.flattenData; //self.search.getDescedents(treeData);
 
-		document.getElementById("tree-search").addEventListener("click", function(){
-			var searchBox = document.getElementById("search-box");
-			var  searchText =  searchBox.value.trim() ;
+		document.getElementById("search-list").addEventListener("keyup", function(){
+			let self= this,
+			 	searchText =  self.value.trim(),
+				searchResultsArea = document.querySelector("#searchResults");
 
-			if (!searchText) {
+			if (!searchText || searchText.length < 2) {
 				return;
 			}
 
-			var searchResult = _.filter(flattenTreeData, function(d) {
+			let searchResults = _.filter(flattenTreeData, function(d) {
 				return d.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) >= 0;
 			});
 
-			alert(searchResult);
-
-			//  document.getElementById("demo").innerHTML = "Hello World";
+			searchResultsArea.innerHTML = "";
+			for (let searchResult of searchResults) {
+				searchResultsArea.insertAdjacentHTML("beforeend",  `<option value="${searchResult.name}" data-search-id=${searchResult.id}>`);
+		 }
 		});
 
 		// ************** Generate the tree diagram	 *****************
-		let margin = {
-			top: 20,
-			right: 120,
-			bottom: 20,
-			left: 90
-		},
+		let margin = { top: 20, right: 120, 	bottom: 20,	left: 90 },
 		width = 960 - margin.right - margin.left,
 		height = 1000 - margin.top - margin.bottom,
 		i = 0,
@@ -101,16 +99,16 @@ markWellAnnotated() {
 		root,
 		tree = d3.layout.tree()
 		.size([height, width]);
+
 		var diagonal = d3.svg.diagonal()
 		.projection(function(d) {
 			return [d.y, d.x];
 		}),
-		svg = d3.select("body").append("svg")
+		svg = d3.select("#gramene-tree-area").append("svg")
 		.attr("width", width + margin.right + margin.left)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
 
 		root = treeData[0];
 		root.x0 = height / 2;
@@ -127,7 +125,6 @@ markWellAnnotated() {
 			// Compute the new tree layout.
 			let nodes = tree.nodes(root).reverse(),
 			links = tree.links(nodes);
-			//self = this;
 
 			// Normalize for fixed-depth.
 			nodes.forEach(function(d) {

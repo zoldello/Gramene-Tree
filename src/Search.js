@@ -1,4 +1,10 @@
+import _ from "underscore";
+
 export default class Search {
+	constructor(flattenData) {
+			this.flattenData = flattenData;
+	}
+
 		getDescedents (array, condition)  {
 		let result = [],
 			self = this;
@@ -18,5 +24,11 @@ export default class Search {
 			}
 		});
 		return result;
+	}
+
+	getMatchByName(searchText) {
+	return 	_.filter(this.flattenData, function(d) {
+ 		return d.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) >= 0;
+ 	});
 	}
 }
