@@ -1,5 +1,6 @@
 import d3 from "d3";
-import _ from "lodash";
+import _ from "underscore";
+import Search from "./Search";
 
 export default class Tree {
 	constructor(data) {
@@ -7,6 +8,7 @@ export default class Tree {
 		this._tree =  null;
 		this._flattenData = null;
 		this.svg = null;
+		this.search = new Search();
 	}
 
 	get data () {
@@ -18,6 +20,9 @@ export default class Tree {
 	}
 
 	get flattenData() {
+		if (!this._flattenData) {
+			this._flattenData =  this.search.getDescedents(this.root);
+		};
 		return this._flattenData;
 	}
 
@@ -29,66 +34,41 @@ export default class Tree {
 		return !!d.children || !!d._children;
 	}
 
-	flat(array) {
-		var result = [];
-
-		if (!array || !!array.length) {
-			return [];
-		}
-		array.forEach(function (a) {
-			result.push(a);
-			if (Array.isArray(a.children)) {
-				result = result.concat(flat(a.children));
-			}
-		});
-		return result;
+	isNotParent(d) {
+		return !d.children && !d._children;
 	}
 
-	flatWithFunc(array, condition) {
-		var result = [];
+markWellAnnotated() {
+	let wellAnnotated = [1, 3702, 39947, 4577];
 
-		array.forEach(function (a) {
-			var children = a.children || a._children
-
-			if ( !condition(a) ) {
-				result.push(a);
-			}
-
-			if (Array.isArray(children) ) {
-				result = result.concat(this.flat(children));
-			}
-		});
-		return result;
-	}
+	d3.selectAll('g.node').classed('well-annotated', function (d) {
+		return  wellAnnotated.includes(d.id);
+	});
+}
 
 	selectNode(children) {
-		let  svg = d3.select("body").append("svg");
-		svg.selectAll("g.node").classed('selected-node', function(d, i) {
-			if ( _.pluck(children, "id").indexOf(d.id)  < 0 ) {
-				return false;
-			}
+		if (!children || children.length === 0) {
+			return;
+		}
 
-			if ( d.isSelected === "false" ) {
-				d.isSelected = "true";
-				return true;
-			}  else {
-				d.isSelected = "false";
-				return false;
+		let  self = this,
+			svg = d3.select("body").append("svg"),
+			parentElement = document.querySelector(`[data-id="${children[0].parent.id}"]` ),
+			isParentSelected = parentElement.classList.contains("js-isSelected");
+
+			parentElement.classList[isParentSelected ? "remove" : "add"]('js-isSelected'); //toggle
+
+		d3.selectAll('g.node').classed('selected-node', function(d, i) {
+  		if( !d.children && !d._children && _.pluck(children, "id").indexOf(d.id)  >= 0) {
+				return !isParentSelected;
 			}
 		})
 	}
 
 	buildTree() {
-		let treeData = this.root;
-
-		//////////////////////////////////
-		let isParent = this.isParent;
-		let flatWithFunc = this.flatWithFunc;
-		let flat = this.flat;
-		//////////////////////////////////
-		//************  Search ******************
-
-		let flattenTreeData = flat(treeData);
+		let self = this,
+			treeData = self.root,
+			flattenTreeData =  self.flattenData; //self.search.getDescedents(treeData);
 
 		document.getElementById("tree-search").addEventListener("click", function(){
 			var searchBox = document.getElementById("search-box");
@@ -143,14 +123,11 @@ export default class Tree {
 		update(root);
 		d3.select(self.frameElement).style("height", "500px");
 
-		///////////
-		let selectNode = this.selectNode;
-		///////////////
-
 		function update(source) {
 			// Compute the new tree layout.
 			let nodes = tree.nodes(root).reverse(),
 			links = tree.links(nodes);
+			//self = this;
 
 			// Normalize for fixed-depth.
 			nodes.forEach(function(d) {
@@ -175,6 +152,9 @@ export default class Tree {
 			// Enter any new nodes at the parent's previous position.
 			var nodeEnter = node.enter().append("g")
 			.attr("class", "node tooltip")
+			.attr("data-id", function(d) {
+				return d.id;
+			})
 			.attr("transform", function(d) {
 				return "translate(" + (source.y0) + "," + source.x0 + ")";
 			})
@@ -189,22 +169,29 @@ export default class Tree {
 
 				update(d);
 
-				if ( !isParent(d) ) {
+				if (!self.isParent(d)) {
+					let element = document.querySelector(`[data-id="${d.id}"]`),
+						isSelected = element.classList.contains("selected-node");
+
+						element.classList[isSelected ? "remove" : "add"]("selected-node"); // toggle highlight on element
+				}
+/*
+				if ( !self.isParent(d) ) {
 					var theArrayThing = [];
 
 					theArrayThing.push(d);
 					let selectNode = this.selectNode;
 					selectNode(  theArrayThing  );
 				}
+				*/
 			})
 			.on('dblclick', function (d) {
 				let children;
 
-				if (!isParent(d)) {
+				if (!self.isParent(d)) {
 					return;
 				}
-
-				children = flatWithFunc(d.children || d._children,  isParent) ;
+				children = self.search.getDescedents(d.children || d._children,  self.isNotParent) ;
 
 				let node = svg.selectAll("g.node")
 				.data(nodes, function(d) {
@@ -218,7 +205,7 @@ export default class Tree {
 					var i = 0
 				});
 
-				selectNode(children);
+				self.selectNode(children);
 
 				//alert('double click');
 
@@ -341,6 +328,10 @@ export default class Tree {
 				d.x0 = d.x;
 				d.y0 = d.y;
 			});
-		}
+		} //update
+
+					self.markWellAnnotated();
 	}
+
+
 }

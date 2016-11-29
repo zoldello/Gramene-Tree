@@ -44,6 +44,7 @@
     "asyncwait": "^1.0.2",
     "d3": "3.5.17",
     "gramene-trees-client": "^2.4.7",
-    "lodash": "^4.17.2"
+    "lodash": "^4.17.2",
+    "underscore": "^1.8.3"
   }
 }

@@ -12,6 +12,10 @@
 	fill: red !important;
 }
 
+.well-annotated text{
+	font-weight: bold;
+}
+
 .node text {
 	font: 12px sans-serif;
 }
