@@ -175,16 +175,8 @@ markWellAnnotated() {
 
 						element.classList[isSelected ? "remove" : "add"]("selected-node"); // toggle highlight on element
 				}
-/*
-				if ( !self.isParent(d) ) {
-					var theArrayThing = [];
 
-					theArrayThing.push(d);
-					let selectNode = this.selectNode;
-					selectNode(  theArrayThing  );
-				}
-				*/
-			})
+							})
 			.on('dblclick', function (d) {
 				let children;
 
