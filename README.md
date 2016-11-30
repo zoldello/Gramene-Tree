@@ -53,3 +53,12 @@ Features
 - Search by name by typing in the search box.
 
 - well Annotated models are in bold. It is only visible if it is a leaf node.
+
+
+Further Work
+-----------------------------------------------------
+Here are ideas I am pondering for future releases
+
+- Hide or show childen nodes via CSS rather than deleting or re-adding children, respectively (technical debt)
+
+-   Highlight specific subtrees with a color (feature)
