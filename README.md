@@ -22,7 +22,7 @@ Earlier version of the required applications may work. However, they are guarant
 IE versions lowers than 10 may work. However, the search functionality is supported in IE 10+. IE 10 or later is recommended.
 
 
-How to Run
+How to Setup local Environment
 -----------------------------------------------------
 
 -  Download or clone the code
@@ -33,7 +33,19 @@ How to Run
 npm install
 ```
 
+
+How to Run
+-----------------------------------------------------
+- Open up the folder location in a console
+
+- Run webpack
+```
+webpack
+```
+
 - Open up tree.html
+
+- You will see the tree in the page 
 
 
 Features
