@@ -71,6 +71,8 @@ Further Work
 -----------------------------------------------------
 Here are ideas I am pondering for future releases
 
+- UNIT TEST and BDD TEST (technical debt)
+
 - Hide or show childen nodes via CSS rather than deleting or re-adding children, respectively (technical debt)
 
 -   Highlight specific subtrees with a color (feature)
