@@ -1,10 +1,6 @@
 import _ from "underscore";
 
 export default class Search {
-	constructor(flattenData) {
-			this.flattenData = flattenData;
-	}
-
 		getDescedents (array, condition)  {
 		let result = [],
 			self = this;
@@ -24,6 +20,38 @@ export default class Search {
 			}
 		});
 		return result;
+	}
+
+	bindSearch(flattenTreeData) {
+		let  self = this;
+
+		document.getElementById("search-list").addEventListener("keyup", function(){
+			let self= this,
+				searchText =  self.value.trim(),
+				searchResultsArea = document.querySelector("#searchResults");
+
+			if (!searchText || searchText.length < 2) {
+				return;
+			}
+
+			let searchResults = _.filter(flattenTreeData, function(d) {
+				return d.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) >= 0;
+			});
+
+			searchResultsArea.innerHTML = "";
+			for (let searchResult of searchResults) {
+				let nodeIdPath = [],
+					activeNode = searchResult;
+
+				while (!!activeNode.parent) {
+					nodeIdPath.push(activeNode.parent.name);
+					activeNode = activeNode.parent;
+				}
+
+				nodeIdPath = nodeIdPath.reverse();
+				searchResultsArea.insertAdjacentHTML("beforeend",  `<option value="${searchResult.name} (path: ${nodeIdPath.join(' ->')})"  data-search-id=${searchResult.id}>`);
+		 }
+		});
 	}
 
 	getMatchByName(searchText) {

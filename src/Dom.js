@@ -4,7 +4,7 @@ export default class Dom {
 	constructor() {
 	}
 
-	bindSearch() {
+	bindSearch(flattenTreeData) {
 		document.getElementById("tree-search").addEventListener("click", function(){
 			let searchBox = document.getElementById("search-box");
 			let  searchText =  searchBox.value.trim() ;

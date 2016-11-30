@@ -2,7 +2,6 @@ import d3 from "d3";
 import _ from "underscore";
 import Search from "./Search";
 
-
 export default class Tree {
 	constructor(data) {
 		this._data = data;
@@ -21,8 +20,10 @@ export default class Tree {
 	}
 
 	get flattenData() {
-		if (!this._flattenData) {
-			this._flattenData =  this.search.getDescedents(this.root);
+		let self = this;
+
+		if (!self._flattenData) {
+			self._flattenData =  self.search.getDescedents(this.root);
 		}
 		return this._flattenData;
 	}
@@ -70,39 +71,8 @@ markWellAnnotated() {
 			treeData = self.root,
 			flattenTreeData =  self.flattenData; //self.search.getDescedents(treeData);
 
+			self.search.bindSearch(flattenTreeData);
 
-			// search
-		document.getElementById("search-list").addEventListener("keyup", function(){
-			let self= this,
-			 	searchText =  self.value.trim(),
-				searchResultsArea = document.querySelector("#searchResults");
-
-			if (!searchText || searchText.length < 2) {
-				return;
-			}
-
-			let searchResults = _.filter(flattenTreeData, function(d) {
-				return d.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) >= 0;
-			});
-
-			searchResultsArea.innerHTML = "";
-			for (let searchResult of searchResults) {
-				let nodeIdPath = [],
-					activeNode = searchResult;
-
-				while (!!activeNode.parent) {
-					nodeIdPath.push(activeNode.parent.name);
-					activeNode = activeNode.parent;
-				}
-
-				nodeIdPath = nodeIdPath.reverse();
-
-				searchResultsArea.insertAdjacentHTML("beforeend",  `<option value="${searchResult.name} (path: ${nodeIdPath.join(' ->')})"  data-search-id=${searchResult.id}>`);
-		 }
-
-		});
-
-		////////////////////////////////////////
 		// ************** Generate the tree diagram	 *****************
 		let margin = { top: 20, right: 120, 	bottom: 20,	left: 90 },
 		width = 960 - margin.right - margin.left,
@@ -112,7 +82,7 @@ markWellAnnotated() {
 		root,
 		tree = d3.layout.tree().size([height, width]);
 
-		var diagonal = d3.svg.diagonal()
+		let diagonal = d3.svg.diagonal()
 		.projection(function(d) {
 			return [d.y, d.x];
 		}),
@@ -126,7 +96,7 @@ markWellAnnotated() {
 		root.x0 = height / 2;
 		root.y0 = 0;
 
-		var treeDepth = d3.max(tree(root), function(d) {
+		let treeDepth = d3.max(tree(root), function(d) {
 			return d.depth;
 		});
 
@@ -184,7 +154,6 @@ markWellAnnotated() {
 
 						element.classList[isSelected ? "remove" : "add"]("selected-node"); // toggle highlight on element
 				}
-
 							})
 			.on('dblclick', function (d) {
 				let children;
@@ -193,12 +162,7 @@ markWellAnnotated() {
 					return;
 				}
 				children = self.search.getDescedents(d.children || d._children,  self.isNotParent) ;
-
-
 				self.selectNode(children);
-
-				//alert('double click');
-
 			})
 
 			.on("mouseover", function(d) {
