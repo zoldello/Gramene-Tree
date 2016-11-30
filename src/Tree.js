@@ -1,7 +1,7 @@
 import d3 from "d3";
 import _ from "underscore";
 import Search from "./Search";
-import dom from "./Dom";
+
 
 export default class Tree {
 	constructor(data) {
@@ -13,7 +13,7 @@ export default class Tree {
 	}
 
 	get data () {
-		return this._data
+		return this._data;
 	}
 
 	get root() {
@@ -23,7 +23,7 @@ export default class Tree {
 	get flattenData() {
 		if (!this._flattenData) {
 			this._flattenData =  this.search.getDescedents(this.root);
-		};
+		}
 		return this._flattenData;
 	}
 
@@ -53,7 +53,6 @@ markWellAnnotated() {
 		}
 
 		let  self = this,
-			svg = d3.select("body").append("svg"),
 			parentElement = document.querySelector(`[data-id="${children[0].parent.id}"]` ),
 			isParentSelected = parentElement.classList.contains("js-isSelected");
 
@@ -63,7 +62,7 @@ markWellAnnotated() {
   		if( !d.children && !d._children && _.pluck(children, "id").indexOf(d.id)  >= 0) {
 				return !isParentSelected;
 			}
-		})
+		});
 	}
 
 	buildTree() {
@@ -71,6 +70,8 @@ markWellAnnotated() {
 			treeData = self.root,
 			flattenTreeData =  self.flattenData; //self.search.getDescedents(treeData);
 
+
+			// search
 		document.getElementById("search-list").addEventListener("keyup", function(){
 			let self= this,
 			 	searchText =  self.value.trim(),
@@ -86,10 +87,22 @@ markWellAnnotated() {
 
 			searchResultsArea.innerHTML = "";
 			for (let searchResult of searchResults) {
-				searchResultsArea.insertAdjacentHTML("beforeend",  `<option value="${searchResult.name}" data-search-id=${searchResult.id}>`);
+				let nodeIdPath = [],
+					activeNode = searchResult;
+
+				while (!!activeNode.parent) {
+					nodeIdPath.push(activeNode.parent.name);
+					activeNode = activeNode.parent;
+				}
+
+				nodeIdPath = nodeIdPath.reverse();
+
+				searchResultsArea.insertAdjacentHTML("beforeend",  `<option value="${searchResult.name} (path: ${nodeIdPath.join(' ->')})"  data-search-id=${searchResult.id}>`);
 		 }
+
 		});
 
+		////////////////////////////////////////
 		// ************** Generate the tree diagram	 *****************
 		let margin = { top: 20, right: 120, 	bottom: 20,	left: 90 },
 		width = 960 - margin.right - margin.left,
@@ -97,8 +110,7 @@ markWellAnnotated() {
 		i = 0,
 		duration = 750,
 		root,
-		tree = d3.layout.tree()
-		.size([height, width]);
+		tree = d3.layout.tree().size([height, width]);
 
 		var diagonal = d3.svg.diagonal()
 		.projection(function(d) {
@@ -116,7 +128,7 @@ markWellAnnotated() {
 
 		var treeDepth = d3.max(tree(root), function(d) {
 			return d.depth;
-		})
+		});
 
 		update(root);
 		d3.select(self.frameElement).style("height", "500px");
@@ -182,17 +194,6 @@ markWellAnnotated() {
 				}
 				children = self.search.getDescedents(d.children || d._children,  self.isNotParent) ;
 
-				let node = svg.selectAll("g.node")
-				.data(nodes, function(d) {
-					var i = 0;
-
-					//return d.id || (d.id = ++i);
-				});
-
-				let nodeEnter = node.enter().append("g")
-				.classed('selected-node', function(d) {
-					var i = 0
-				});
 
 				self.selectNode(children);
 
@@ -207,7 +208,7 @@ markWellAnnotated() {
 
 				div.transition()
 				.duration(200)
-				.style("opacity", .9);
+				.style("opacity", 0.9);
 				div .html(d.name   )
 				.style("left", (d3.event.pageX) + "px")
 				.style("top", (d3.event.pageY - 28) + "px");
@@ -318,9 +319,6 @@ markWellAnnotated() {
 				d.y0 = d.y;
 			});
 		} //update
-
 					self.markWellAnnotated();
 	}
-
-
 }
