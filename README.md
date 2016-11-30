@@ -71,6 +71,8 @@ Further Work
 -----------------------------------------------------
 Here are ideas I am pondering for future releases
 
+- Some of the leaf-nodes' text are mingled together (bug)
+
 - UNIT TEST and BDD TEST. I ought to have done TDD (technical debt)
 
 - The buildTree function in Tree.js is too complex and unit testing is tricky (technical debt)

@@ -73,12 +73,7 @@ export default class Tree {
 
         self.search.bindSearch(flattenTreeData); // binds search box
 
-        let margin = {
-                top: 20,
-                right: 120,
-                bottom: 20,
-                left: 90
-            },
+        let margin = { top: 20, right: 120, bottom: 20, left: 90   },
             width = 960 - margin.right - margin.left,
             height = 1000 - margin.top - margin.bottom,
             i = 0,
@@ -88,7 +83,7 @@ export default class Tree {
 
         let diagonal = d3.svg.diagonal()
             .projection(function(d) {
-                return [d.y, d.x];
+						   return [d.y, d.x];
             }),
             svg = d3.select("#gramene-tree-area").append("svg")
             .attr("width", width + margin.right + margin.left)
@@ -121,13 +116,13 @@ export default class Tree {
             });
 
             // Update the nodes…
-            var node = svg.selectAll("g.node")
+            let node = svg.selectAll("g.node")
                 .data(nodes, function(d) {
                     return d.id || (d.id = ++i);
                 });
 
             // Define the div for the tooltip
-            var div = d3.select("body").append("div")
+            let div = d3.select("body").append("div")
                 .attr("class", "tooltip")
                 .style("opacity", 0);
 
@@ -187,7 +182,7 @@ export default class Tree {
 
             nodeEnter.append("circle")
                 .attr("r", 1e-6)
-                .style("fill", function(d) {
+								.style("fill", function(d) {
                     return d._children ? "lightsteelblue" : "#fff";
                 });
             nodeEnter.append("text")
@@ -201,6 +196,7 @@ export default class Tree {
                 .text(function(d) {
                     return !d.children && !d._children ? d.name : ' ';
                 })
+								.style("font-size" , "11px")
                 .style("fill-opacity", 1e-6);
 
             // Transition nodes to their new position.
@@ -211,7 +207,7 @@ export default class Tree {
                     return "translate(" + dist + "," + d.x + ")";
                 });
             nodeUpdate.select("circle")
-                .attr("r", 10)
+                .attr("r", 4)
                 .style("fill", function(d) {
                     return d._children ? "lightsteelblue" : "#fff";
                 });
@@ -225,10 +221,8 @@ export default class Tree {
                     return "translate(" + source.y + "," + source.x + ")";
                 })
                 .remove();
-            nodeExit.select("circle")
-                .attr("r", 1e-6);
-            nodeExit.select("text")
-                .style("fill-opacity", 1e-6);
+            nodeExit.select("circle").attr("r", 1e-6);
+            nodeExit.select("text").style("fill-opacity", 1e-6);
 
             // Update the links…
             let link = svg.selectAll("path.link")
@@ -240,33 +234,19 @@ export default class Tree {
             link.enter().insert("path", "g")
                 .attr("class", "link")
                 .attr("d", function(d) {
-                    var o = {
-                        x: source.x0,
-                        y: source.y0
-                    };
-                    return diagonal({
-                        source: o,
-                        target: o
-                    });
+                    var o = { x: source.x0, y: source.y0 };
+                    return diagonal({ source: o, target: o });
                 });
 
             // Transition links to their new position.
-            link.transition()
-                .duration(duration)
-                .attr("d", diagonal);
+            link.transition().duration(duration).attr("d", diagonal);
 
             // Transition exiting nodes to the parent's new position.
             link.exit().transition()
                 .duration(duration)
                 .attr("d", function(d) {
-                    var o = {
-                        x: source.x,
-                        y: source.y
-                    };
-                    return diagonal({
-                        source: o,
-                        target: o
-                    });
+                    var o = { x: source.x, y: source.y };
+                    return diagonal({ source: o, target: o  });
                 })
                 .remove();
 
@@ -274,7 +254,7 @@ export default class Tree {
             nodes.forEach(function(d) {
                 d.x0 = d.x;
                 d.y0 = d.y;
-            });
+						 });
         } //update
 
         self.markWellAnnotated();

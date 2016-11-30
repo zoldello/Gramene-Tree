@@ -1,11 +1,16 @@
+
+#search-list {
+	float: right;
+}
+
 .node {
 	cursor: pointer;
 }
 
 .node circle {
 	fill: #fff;
-	stroke: steelblue;
-	stroke-width: 3px;
+	stroke: green;
+	stroke-width: 1px;
 }
 
 .selected-node circle {
