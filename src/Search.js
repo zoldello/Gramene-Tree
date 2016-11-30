@@ -30,7 +30,11 @@ export default class Search {
                 searchText = self.value.trim(),
                 searchResultsArea = document.querySelector("#searchResults");
 
-            if (!searchText || searchText.length < 2) {
+            searchResultsArea.innerHTML = "";
+
+console.log(searchText);
+
+            if (!searchText || searchText.length < 1) {
                 return;
             }
 
@@ -49,7 +53,7 @@ export default class Search {
                 }
 
                 nodeIdPath = nodeIdPath.reverse();
-                searchResultsArea.insertAdjacentHTML("beforeend", `<option value="${searchResult.name} (path: ${nodeIdPath.join(' ->')})"  data-search-id=${searchResult.id}>`);
+                searchResultsArea.insertAdjacentHTML("beforeend", `<option value="${searchResult.name} (${nodeIdPath.join(' ->')})"  data-search-id=${searchResult.id}>`);
             }
         });
     }

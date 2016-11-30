@@ -19,7 +19,7 @@ Requirements
 
 Earlier version of the required applications may work. However, they are guaranteed and an update is recommended.
 
-IE versions lowers than 10 may work. However, the search functionality is supported in IE 10+. IE 10 or later is recommended.
+IE versions lowers than 10 and Safari may work for the most part. However, the typeahead is not supported in IE 9 and lower and Safari. It is recommended you use a supported browser.  
 
 
 How to Setup local Environment
@@ -71,7 +71,9 @@ Further Work
 -----------------------------------------------------
 Here are ideas I am pondering for future releases
 
-- UNIT TEST and BDD TEST (technical debt)
+- UNIT TEST and BDD TEST. I ought to have done TDD (technical debt)
+
+- The buildTree function in Tree.js is too complex and unit testing is tricky (technical debt)
 
 - Hide or show childen nodes via CSS rather than deleting or re-adding children, respectively (technical debt)
 
