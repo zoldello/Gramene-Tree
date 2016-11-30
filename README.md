@@ -1,6 +1,6 @@
 # Gramene Tree
 
-This is an implementation a tree that runs off Gramene Tree data [http://gramene.or]).
+This is an implementation a tree that runs off Gramene Tree data [http://gramene.org].
 
 
 Author
