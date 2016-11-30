@@ -8,8 +8,8 @@ module.exports = {
 		preLoaders: [
 			{ test: /\.js$/,exclude: /node_modules/, loader: "jshint-loader" },
 		  { css: /\.css$/, test: /\.css/, loader: "style-loader!css-loader" },
-			{ test: /\.html/, loader: 'htmlhint', exclude: /node_modules/ },
-			{ test: /\.js$/, loader: "source-map-loader" }
+			{ test: /\.html/, loader: 'htmlhint', exclude: /node_modules/ }
+			//{ test: /\.js$/, loader: "source-map-loader" }
 		],
 		loaders: [
 			{ test: /\.js$/, exclude:/node_modules/, loader: "babel-loader" },
