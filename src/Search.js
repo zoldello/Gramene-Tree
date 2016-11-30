@@ -32,8 +32,6 @@ export default class Search {
 
             searchResultsArea.innerHTML = "";
 
-console.log(searchText);
-
             if (!searchText || searchText.length < 1) {
                 return;
             }

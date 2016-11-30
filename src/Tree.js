@@ -66,6 +66,7 @@ export default class Tree {
         });
     }
 
+// heavily based on: http://stackoverflow.com/a/38319388/178550
     buildTree() {
         let self = this,
             treeData = self.root,
