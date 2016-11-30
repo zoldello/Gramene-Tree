@@ -45,7 +45,7 @@ webpack
 
 - Open up tree.html
 
-- You will see the tree in the page 
+- You will see the tree in the page
 
 
 Features
@@ -74,3 +74,7 @@ Here are ideas I am pondering for future releases
 - Hide or show childen nodes via CSS rather than deleting or re-adding children, respectively (technical debt)
 
 -   Highlight specific subtrees with a color (feature)
+
+- Make the spacing between leaf nodes event  (feature)
+
+- Make all paths straights rather than curvy as they are now  (feature)
