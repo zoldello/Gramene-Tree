@@ -83,6 +83,6 @@ Here are ideas I am pondering for future releases
 
 -   Highlight specific subtrees with a color (feature)
 
-- Make the spacing between leaf nodes event  (feature)
+- Make the spacing between leaf nodes even  (feature)
 
 - Make all paths straights rather than curvy as they are now  (feature)
