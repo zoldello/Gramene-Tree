@@ -71,7 +71,7 @@ export default class Tree {
             treeData = self.root,
             flattenTreeData = self.flattenData;
 
-        self.search.bindSearch(flattenTreeData);
+        self.search.bindSearch(flattenTreeData); // binds search box
 
         let margin = {
                 top: 20,
