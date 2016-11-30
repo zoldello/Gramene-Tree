@@ -75,6 +75,8 @@ Here are ideas I am pondering for future releases
 
 - UNIT TEST and BDD TEST. I ought to have done TDD (technical debt)
 
+	Mobile support like touch and double tap (features)
+
 - The buildTree function in Tree.js is too complex and unit testing is tricky (technical debt)
 
 - Hide or show childen nodes via CSS rather than deleting or re-adding children, respectively (technical debt)
