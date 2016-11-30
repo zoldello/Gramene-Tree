@@ -17,9 +17,9 @@ Requirements
 
 - IE 10+, Edge, Chrome, Opera and FireFox.
 
-Earlier version of the required applications may work. However, they are guaranteed and an update is recommended.
+For browsers, IE versions lowers than 10 and Safari may work for the most part. However, the typeahead is not supported in IE 9 and lower and Safari. It is recommended you use a supported browser.  
 
-IE versions lowers than 10 and Safari may work for the most part. However, the typeahead is not supported in IE 9 and lower and Safari. It is recommended you use a supported browser.  
+For other applications, earlier version of the required applications may work. However, they are guaranteed and an upgrade is recommended.
 
 
 How to Setup local Environment
