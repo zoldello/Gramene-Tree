@@ -1,14 +1,14 @@
-[Gramene Tree][gh-page]
+# Gramene Tree
 ==================
 
 This is an implementation a tree that runs off Gramene Tree data [http://gramene.or]).
 
 
-Contributor
+Author
 ---------------------------------------------
 Phil
 
-Requirement
+Requirements
 ---------------------------------------------------------------------
 - Operating System: Linux, Windows or MacOs
 
@@ -18,9 +18,9 @@ Requirement
 
 - IE 10+, Edge, Chrome, Opera and FireFox.
 
-Earlier version of the required application may work. However, they are guaranteed and an update is recommended.
+Earlier version of the required applications may work. However, they are guaranteed and an update is recommended.
 
-IE versions lowers than 10 may work. However, the search functionality is supported in IE 10+. IE 10 + is recommended.
+IE versions lowers than 10 may work. However, the search functionality is supported in IE 10+. IE 10 or later is recommended.
 
 
 How to Run
@@ -28,7 +28,7 @@ How to Run
 
 -  Download or clone the code
 
-- Step 2: Fetch dependencies by running:
+-  Fetch dependencies by running:
 
 ```
 npm install
@@ -43,7 +43,7 @@ Features
 
 - Display internal node name by hovering over a node
 
--Select all leaf nodes of an internal node by double clicking the internal node (if the internal node was not previously selected.) The leaf nodes will turn red
+- Select all leaf nodes of an internal node by double clicking the internal node (if the internal node was not previously selected.) The leaf nodes will turn red
 
 - Unselect all leaf nodes of an intenral node by double clicking the internal node (if internal node was not previously selected.) The leaf nodes will become clear.
 
@@ -52,3 +52,5 @@ Features
 - Unselect a specific leaf node by clicking on it (if the leaf node is selected.) The leaf node will clear out.
 
 - Search by name by typing in the search box.
+
+- well Annotated models are in bold. It is only visible if it is a leaf node. 
