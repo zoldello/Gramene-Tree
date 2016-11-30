@@ -1,5 +1,4 @@
 # Gramene Tree
-==================
 
 This is an implementation a tree that runs off Gramene Tree data [http://gramene.or]).
 
@@ -53,4 +52,4 @@ Features
 
 - Search by name by typing in the search box.
 
-- well Annotated models are in bold. It is only visible if it is a leaf node. 
+- well Annotated models are in bold. It is only visible if it is a leaf node.
